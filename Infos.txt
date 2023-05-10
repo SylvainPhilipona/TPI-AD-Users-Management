@@ -1,16 +1,14 @@
 https://lucid.app/lucidchart/63baee3f-0f2c-4eae-bee7-59a599290ba7/edit?viewport_loc=-444%2C-136%2C4039%2C2017%2CeQDWfm~.QisA&invitationId=inv_448e1d67-e4ac-4f9d-949b-6f810f606c3c
 ✔
 
-14h10
-
 Tâches : 
 	Création :
 		- INTEGRATION
 		- Recherche si utilisateur existe 				(Sylvain + Philipona)
-		- Génération identifiant login 					(sylphilipona)
+		- ✔ Génération identifiant login 					(sylphilipona)
 		- Suppression des diacritiques 					(D'angélo => Dangelo)
 		- Verification existance identifiant login 		(sylphilipona)
-		- Génération mot de passe 						(Ssq35H6FW$fV)
+		- ✔ Génération mot de passe 						(Ssq35H6FW$fV)
 		- Création script d'ouverture de session 		(Connect UserHome)
 		- Génération description 						(Membre de la classe CIN4B)
 		- Création dans la bonne OU 					(OU=Students,OU=Users,OU=ETML,OU=EDU,DC=dgep,DC=edu-vaud,DC=ch)

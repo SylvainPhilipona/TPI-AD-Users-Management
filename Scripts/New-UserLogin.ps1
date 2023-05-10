@@ -45,6 +45,10 @@ param(
     [string]$LastName
 )
 
+##### Constants #####
+$FIRSTNAME_MAX_CHARS = 3
+$LASTNAME_MAX_CHARS = 8
+
 ##### Variables #####
 
 $login = ""
@@ -53,9 +57,9 @@ $login = ""
 
 # Get the first 3 characters of the firstname
 # If the firstname do not contains at least 3 characters, all the firstname is taken
-if ($FirstName.Length -gt 3) {
+if ($FirstName.Length -gt $FIRSTNAME_MAX_CHARS) {
     # Add to the login string the 3 first chars
-    $login += $FirstName.substring(0,3)
+    $login += $FirstName.substring(0,$FIRSTNAME_MAX_CHARS)
 } else {
     # Add to the login string the entire firstname
     $login += $FirstName
@@ -63,9 +67,9 @@ if ($FirstName.Length -gt 3) {
 
 # Get the 8 first chars of the lastname
 # If the lastname do not contains at least 8 chars, all the lastname is taken
-if ($LastName.Length -gt 8) {
+if ($LastName.Length -gt $LASTNAME_MAX_CHARS) {
     # Add to the login string the 8 first chars
-    $login += $LastName.substring(0,8)
+    $login += $LastName.substring(0, $LASTNAME_MAX_CHARS)
 } else {
     # Add to the login string the entire lastName
     $login += $LastName
