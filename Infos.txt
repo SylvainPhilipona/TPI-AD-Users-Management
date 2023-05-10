@@ -1,8 +1,5 @@
-08h00 -> 08h50 : Lecture et validation du cahier des charges avec M. Ceran
-08h50 -> 09h25 : Création du répertoire GitHub
-09h25 -> 09h35 : Planification initiale
-09h50 -> 11h25 : Planification initiale
-
+https://lucid.app/lucidchart/63baee3f-0f2c-4eae-bee7-59a599290ba7/edit?viewport_loc=-444%2C-136%2C4039%2C2017%2CeQDWfm~.QisA&invitationId=inv_448e1d67-e4ac-4f9d-949b-6f810f606c3c
+✔
 
 Tâches : 
 	Création :
@@ -33,3 +30,5 @@ Tâches :
 		- Supression si compte desactivé				(Compte désactivé -> suppression)
 		- Suppression HomeDirectory						(Compte supprimé -> Supression du HomeDirectory)
 		- Génération du CSV								(Compte supprimé, HomeDirectory supprimé)
+		
+		
