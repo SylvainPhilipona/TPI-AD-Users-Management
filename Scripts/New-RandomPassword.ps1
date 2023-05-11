@@ -70,19 +70,14 @@ while ($password.Length -lt $Length){
     $randomChar = $all[$randomIndex]
 
     # Check if the exclude similar param is specified
-    if($ExcludeSimilar){
+    if($ExcludeSimilar -and $SIMILAR.Contains($randomChar)){
 
-        # If the generated character is in the list of similars, the character is regenerated
-        if(!($SIMILAR.Contains($randomChar))){
+        # Pass to the next iteration
+        continue
+    }
 
-            # Add the generated char to the password
-            $password += $randomChar
-        }
-    }
-    else{
-        # Add the generated char to the password
-        $password += $randomChar
-    }
+    # Add the generated char to the password
+    $password += $randomChar
 }
 
 # Return the password

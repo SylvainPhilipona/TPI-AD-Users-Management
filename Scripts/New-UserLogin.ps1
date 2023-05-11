@@ -38,14 +38,17 @@
 ##### Script parameters #####
 
 param(
+    [Parameter(Mandatory=$true)]
     [ValidateNotNullOrEmpty()]
     [string]$FirstName,
 
+    [Parameter(Mandatory=$true)]
     [ValidateNotNullOrEmpty()]
     [string]$LastName
 )
 
 ##### Constants #####
+
 $FIRSTNAME_MAX_CHARS = 3
 $LASTNAME_MAX_CHARS = 8
 
