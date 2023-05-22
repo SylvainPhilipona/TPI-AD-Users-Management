@@ -73,7 +73,7 @@ if(!(Test-Path -LiteralPath $folderPath -IsValid)){
 
 # Check if the user exists
 if(!(Get-ADUser -Filter { SamAccountName -eq $Username })){
-    Write-Error "The zser '$Username' not exists"
+    Write-Error "The user '$Username' not exists"
     return $null
 }
 
