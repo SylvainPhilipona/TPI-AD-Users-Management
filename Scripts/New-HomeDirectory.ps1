@@ -65,9 +65,9 @@ param(
 ##### Script logic #####
 
 # Check if the folder path is in the right format
-if(!(Test-Path -LiteralPath $folderPath -IsValid)){
+if(!(Test-Path -LiteralPath $FolderPath -IsValid)){
     
-    Write-Error "The path '$folderPath' isn't in the right format"
+    Write-Error "The path '$FolderPath' isn't in the right format"
     return $null
 }
 

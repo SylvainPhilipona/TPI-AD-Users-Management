@@ -59,7 +59,7 @@ param(
 
 # Retrieve the aduser
 try{
-    $AdUser = Get-ADUser -identity $User
+    $adUser = Get-ADUser -identity $User
 }
 catch{
     return $null
@@ -90,10 +90,10 @@ foreach($group in $Groups){
     $members = (Get-ADGroupMember -Identity $group -Recursive | Select-Object -ExpandProperty Name)
 
     # Check if the user is member of the group
-    if(!($members -and $members.Contains($AdUser.Name))){
+    if(!($members -and $members.Contains($adUser.Name))){
 
         # Add the user to the group
-        Add-ADGroupMember -Identity $group -Members $AdUser
+        Add-ADGroupMember -Identity $group -Members $adUser
     
         # Log the success action
         $returnData += [pscustomobject]@{

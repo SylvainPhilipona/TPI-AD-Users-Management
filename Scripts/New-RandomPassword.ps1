@@ -63,6 +63,7 @@ $password = ""
 
 # Generate the password with the length input in arguments
 while ($password.Length -lt $Length){
+    
     # Generate a random number from 0 to the max index of the 'all' variable
     $randomIndex = Get-Random -Minimum 0 -Maximum ($all.Length-1)
 

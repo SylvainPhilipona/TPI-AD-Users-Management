@@ -55,10 +55,10 @@ $Text = $Text.Replace(" ", "")
 
 # Split characters composed of several characters (é => e ´)
 # Example : L'été de Raphaël => L ' e ́ t e ́   d e   R a p h a e ̈ l
-[System.Text.NormalizationForm]$NormalizationForm = "FormD"
+[System.Text.NormalizationForm]$normalizationForm = "FormD"
 
 # Normalize the text
-$Normalized = $Text.Normalize($NormalizationForm)
+$Normalized = $Text.Normalize($normalizationForm)
 
 # Iterates through all text in the format of a character array
 foreach($char in $normalized.ToCharArray()){

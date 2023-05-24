@@ -44,7 +44,7 @@ param(
 ##### Script logic #####
 
 # The truth table for the professions and the scripts
-$ProfessionsScripts = @{
+$professionsScripts = @{
     "Automaticien"      = "AM.BAT"
     "Ebeniste"          = "BOIS.BAT"
     "Menuisier"         = "BOIS.BAT"
@@ -60,7 +60,7 @@ $ProfessionsScripts = @{
 }
 
 # Go through the whole truth table
-foreach($script in $ProfessionsScripts.GetEnumerator()){
+foreach($script in $professionsScripts.GetEnumerator()){
 
     # Check if the profession in params match the element in the truth table
     if($Profession -like "*$($script.Key)*"){
