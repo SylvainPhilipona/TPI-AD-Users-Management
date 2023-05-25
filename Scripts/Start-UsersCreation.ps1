@@ -56,16 +56,17 @@
 ##### Script parameters #####
 
 param(
-    # [Parameter(Mandatory=$true)]
+    [Parameter(Mandatory=$true)]
     [ValidateNotNullOrEmpty()]
-    [string]$UsersCSV = "Z:\Administratif\creationUsers-XXX.csv",
+    [string]$UsersCSV,
 
-    # [Parameter(Mandatory=$true)]
+    [Parameter(Mandatory=$true)]
     [ValidateNotNullOrEmpty()]
-    [string]$ActionsCSV = "Z:\Administratif\UsersCreation.csv",
+    [string]$ActionsCSV,
 
+    [Parameter(Mandatory=$true)]
     [ValidateNotNullOrEmpty()]
-    [string]$OUPath = "OU=students,DC=tpi,DC=local",
+    [string]$OUPath,
 
     [ValidateNotNullOrEmpty()]
     [char]$CSVDelimiter = ";"

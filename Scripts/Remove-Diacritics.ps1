@@ -39,6 +39,7 @@
 ##### Script parameters #####
 
 param(
+    [Parameter(Mandatory=$true)]
     [ValidateNotNullOrEmpty()]
     [string]$Text
 )
