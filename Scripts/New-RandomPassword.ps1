@@ -22,7 +22,7 @@
 
 .PARAMETER ExcludeSimilar
     When this parameter is specified, the password will not contain characters that can be confused with others
-
+    
 .OUTPUTS
 	- A random generated password
 

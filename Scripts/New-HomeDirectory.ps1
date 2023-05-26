@@ -66,14 +66,11 @@ param(
 
 # Check if the folder path is in the right format
 if(!(Test-Path -LiteralPath $FolderPath -IsValid)){
-    
-    Write-Error "The path '$FolderPath' isn't in the right format"
     return $null
 }
 
 # Check if the user exists
 if(!(Get-ADUser -Filter { SamAccountName -eq $Username })){
-    Write-Error "The user '$Username' not exists"
     return $null
 }
 

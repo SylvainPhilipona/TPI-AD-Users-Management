@@ -7,9 +7,9 @@
     Date:	25.05.2023
  	*****************************************************************************
     Modifications
- 	Date  : 
- 	Author: 
- 	Reason: 
+ 	Date  : 26.05.2023
+ 	Author: Sylvain Philipona
+ 	Reason: Removed errors messaged
  	*****************************************************************************
 .SYNOPSIS
     Delete the home directory of a ad user
@@ -17,7 +17,7 @@
 .DESCRIPTION
     Delete and unmap the user home directory folder
   	
-.PARAMETER Username
+.PARAMETER Login
     The samAccountName of the user to delete the home directory
 
 .OUTPUTS
@@ -34,21 +34,19 @@
 param(
     [Parameter(Mandatory=$true)]
     [ValidateNotNullOrEmpty()]
-    [string]$Username
+    [string]$Login
 )
 
 ##### Script logic #####
 
 # Check if the user exists
-$adUser = Get-ADUser -Filter { SamAccountName -eq $Username } -Properties HomeDirectory
+$adUser = Get-ADUser -Filter { SamAccountName -eq $Login } -Properties HomeDirectory
 if(!($adUser)){
-    Write-Error "The user '$Username' not exists"
     return $false
 }
 
 # Check if the ad user has a home directory
 if(!($adUser.HomeDirectory)){
-    Write-Error "The user '$Username' not have a home directory"
     return $false
 }
 
