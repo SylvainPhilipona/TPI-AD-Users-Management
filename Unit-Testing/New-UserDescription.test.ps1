@@ -6,9 +6,9 @@
     Date:	12.05.2023
  	*****************************************************************************
     Modifications
- 	Date  : 
- 	Author: 
- 	Reason: 
+ 	Date  : 31.05.2023
+ 	Author: Sylvain Philipona
+ 	Reason: Script moved to another directory
  	*****************************************************************************
 .SYNOPSIS
     Unit tests for the New-UserDescription.test.ps1 script
@@ -40,16 +40,16 @@ Describe "Tests"{
 
     # Cin2A => Cet utilisateur est membre de la classe Cin2A
     It "Cin2A => Cet utilisateur est membre de la classe Cin2A"{
-        (.\New-UserDescription.ps1 -Classe "Cin2A") | Should -Be "Cet utilisateur est membre de la classe Cin2A"
+        (..\Scripts\New-UserDescription.ps1 -Classe "Cin2A") | Should -Be "Cet utilisateur est membre de la classe Cin2A"
     }
 
     # CIN-CID3B => Cet utilisateur est membre de la classe CIN-CID3B
     It "CIN-CID3B => Cet utilisateur est membre de la classe CIN-CID3B"{
-        (.\New-UserDescription.ps1 -Classe "CIN-CID3B") | Should -Be "Cet utilisateur est membre de la classe CIN-CID3B"
+        (..\Scripts\New-UserDescription.ps1 -Classe "CIN-CID3B") | Should -Be "Cet utilisateur est membre de la classe CIN-CID3B"
     }
 
     # CPM2G => Cet utilisateur est membre de la classe CPM2G
     It "CPM2G => Cet utilisateur est membre de la classe CPM2G"{
-        (.\New-UserDescription.ps1 -Classe "CPM2G") | Should -Be "Cet utilisateur est membre de la classe CPM2G"
+        (..\Scripts\New-UserDescription.ps1 -Classe "CPM2G") | Should -Be "Cet utilisateur est membre de la classe CPM2G"
     }
 }

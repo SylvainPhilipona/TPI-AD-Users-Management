@@ -1,4 +1,4 @@
-<#
+﻿<#
 .NOTES
     *****************************************************************************
     ETML
@@ -35,6 +35,9 @@
 .EXAMPLE
     .\Start-UsersModification.ps1 -UsersCSV "Z:\CSV\02-modificationUsers.csv" -ActionsCSV "Z:\CSV\05-editedUsers.csv"
 
+.LINK
+    https://stackoverflow.com/questions/44144678/trying-to-remove-user-from-all-groups-in-an-active-directory-using-powershell-sc
+
 #>
 
 ##### Script parameters #####
@@ -54,15 +57,18 @@ param(
 
 ##### Constants #####
 
+$GROUPS_PREFIX = "GUS_ETML_"
+$GROUPS_SPLIT_CHAR = "%"
 $DEFAULT_ACTIONS_FILE = "Actions.csv"
 
 ##### Variables #####
 
 $tagLogin = "Login"
+$tagEmail = "E-mail"
 $tagClasse = "Classe"
 $tagGroups = "OptionsAD"
 $tagProfession = "Profession"
-$requiredHeaders = @($tagLogin, $tagGroups, $tagClasse, $tagProfession)
+$requiredHeaders = @($tagLogin, $tagEmail, $tagGroups, $tagClasse, $tagProfession)
 
 ##### Script logic #####
 
@@ -74,7 +80,7 @@ if(!(Get-Module -ListAvailable -name ActiveDirectory)){
 
 # Check if the file exists and is in the .csv format
 if(!(Test-Path -Path $UsersCSV -PathType Leaf) -or [IO.Path]::GetExtension($UsersCSV).ToLower() -ne ".csv"){
-    Write-Host "The file does not exist or is not in CSV format." -ForegroundColor Red
+    Write-Host "The file '$UsersCSV' does not exist or is not in CSV format." -ForegroundColor Red
     exit
 }
 
@@ -101,61 +107,109 @@ $allActions = @()
 foreach($user in $users){
 
     # Display the user deletion message
-    $userLogin = $user.$tagLogin
-    Write-Host "User modification : $userLogin." -ForegroundColor Green
+    $samAccountName = $user.$tagLogin
+    Write-Host "User modification : $samAccountName." -ForegroundColor Green
 
     # Define the user actions data
     # This data will be completed according to the script actions performed
     $userActions = @{
-        User = $userLogin
+        User = $samAccountName
         Action = $null
+        Email = $null
         Classe = $null
         LoginScript = $null
         Comments = $null
         Groups = $null
     }
 
-    # Check if the user login field isn'e null or empty
-    if(!$userLogin){
+    # Get if one of the required fields is empty
+    $emptyField = $false
+    foreach($tag in $requiredHeaders){
+
+        # Check if the field is empty
+        if(!($user.$tag)){
+
+            # One field is empty
+            $emptyField = $true
+            break
+        }
+    }
+
+    # If one field is empty
+    if($emptyField){
+
+        # One field is empty
         $userActions["Action"] = "Failed"
-        $userActions["Comments"] = "The '$tagLogin' field is empty."
+        $userActions["Comments"] = "The user '$($user.$tagLogin)' has empty fields."
         $allActions += [PSCustomObject]$userActions
         continue
     }
 
     # Check if the user exists
-    $adUser = Get-ADUser -Filter {samAccountName -eq $userLogin}
+    $adUser = Get-ADUser -Filter {samAccountName -eq $samAccountName} -Properties MemberOf
     if(!($adUser)){
 
         # The user already exists
         $userActions["Action"] = "Failed"
-        $userActions["Comments"] = "The user '$userLogin' doesn't exists."
+        $userActions["Comments"] = "The user '$samAccountName' doesn't exists."
         $allActions += [PSCustomObject]$userActions
         continue
     }
 
+    # Generate the description and login script
+    $description = .\New-UserDescription.ps1 -Classe $user.$tagClasse
+    $logonScript = .\New-UserLoginScript.ps1 -Profession $user.$tagProfession
 
+    # Set the new proprieties of the user
+    $newUserProps = @{
+        Identity                = $samAccountName
+        EmailAddress            = $user.$tagEmail
+        userPrincipalName       = $user.$tagEmail
+        Description             = $description
+        scriptPath              = $logonScript
+    }
 
+    try{
 
-    
+        # Edit the user
+        Set-ADUser @newUserProps
+    }
+    catch{
 
+        # An error occured during the account modification process
+        $userActions["Action"] = "Failed"
+        $userActions["Comments"] = $_
+        $allActions += [PSCustomObject]$userActions
+        continue
+    }
 
+    # Remove the user from all groups
+    $aduser.MemberOf | ForEach-Object{
+        $_ | Remove-ADGroupMember -Members $adUser -Confirm:$false
+    }
 
-
-
-
-
-
+    # Add the user to the groups
+    # Split the group field from the csv and add the groups prefix at the start of it
+    # Return a hashtable of actions performed
+    $groups = $user.$tagGroups.Split($GROUPS_SPLIT_CHAR) | ForEach-Object {
+        $_.Replace($_, "$($GROUPS_PREFIX)$($_)")
+    }
+    $groupsActions = $samAccountName | .\Add-UserGroups.ps1 -Groups $groups | ForEach-Object{
+        "$($_.Group) => $($_.Action)"
+    }
 
     # Log the actions performed on the user
+    $userActions["Action"] = "Success"
+    $userActions["Email"] = $user.$tagEmail
+    $userActions["Classe"] = $user.$tagClasse
+    $userActions["LoginScript"] = $logonScript
+    $userActions["Comments"] = "The account '$samAccountName' was successfully modified."
+    $userActions["Groups"] = ($groupsActions -join $CSVDelimiter)
     $allActions += [PSCustomObject]$userActions
 }
 
-
-
-
 # Format the logged actions for better lisibility
-$allActions = $allActions | Select-Object User, Action, Classe, LoginScript, Comments, Groups
+$allActions = $allActions | Select-Object User, Action, Email, Classe, LoginScript, Comments, Groups
 
 # Check if the path is valid and the file extension is .csv
 if(!(Test-Path $ActionsCSV -IsValid) -or [IO.Path]::GetExtension($ActionsCSV).ToLower() -ne ".csv"){
@@ -167,12 +221,3 @@ if(!(Test-Path $ActionsCSV -IsValid) -or [IO.Path]::GetExtension($ActionsCSV).To
 $allActions | Export-Csv -Path $ActionsCSV -NoTypeInformation -Encoding UTF8 -Delimiter $CSVDelimiter -Force
 Write-Host ($allActions | Format-Table | Out-String)
 Write-Host "The actions are logged in the file '$ActionsCSV'." -ForegroundColor Yellow
-
-
-
-
-
-
-
-
-

@@ -7,9 +7,9 @@
     Date:	15.05.2023
  	*****************************************************************************
     Modifications
- 	Date  : 17.05.2023
+ 	Date  : 31.05.2023
  	Author: Sylvain Philipona
- 	Reason: Access granted to users on theirs personals folders
+ 	Reason: Access granted to users on theirs personals folders with permission limited to Modify
  	*****************************************************************************
 .SYNOPSIS
     Creates a home directory for the user
@@ -116,8 +116,10 @@ if(!(Test-Path "$FolderPath\$Username")){
 }
 
 # Add the access to the user if the user exists
+# The access is in Modify
+# The permissions are applied to both subfolders and files within the folder
 $acl = Get-ACL -Path "$FolderPath\$Username"
-$acl.AddAccessRule((New-Object System.Security.AccessControl.FileSystemAccessRule($Username,"FullControl","Allow")))
+$acl.AddAccessRule((New-Object System.Security.AccessControl.FileSystemAccessRule($Username, "Modify", "ContainerInherit, ObjectInherit", "None", "Allow")))
 Set-Acl -Path "$FolderPath\$Username" -AclObject $acl
 
 # Return the share path to the user home folder

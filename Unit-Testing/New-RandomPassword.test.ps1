@@ -6,9 +6,9 @@
     Date:	10.05.2023
  	*****************************************************************************
     Modifications
- 	Date  : 
- 	Author: 
- 	Reason: 
+ 	Date  : 31.05.2023
+ 	Author: Sylvain Philipona
+ 	Reason: Script moved to another directory
  	*****************************************************************************
 .SYNOPSIS
     Unit tests for the New-RandomPassword.test.ps1 script
@@ -42,18 +42,18 @@ Describe "Tests"{
 
     # New password with length of 16
     It "New password with length of 16"{
-        (.\New-RandomPassword.ps1 -Length 16).Length | Should -Be 16
+        (..\Scripts\New-RandomPassword.ps1 -Length 16).Length | Should -Be 16
     }
 
     # New password with default length
     It "New password with default length"{
-        (.\New-RandomPassword.ps1).Length | Should -Be 12
+        (..\Scripts\New-RandomPassword.ps1).Length | Should -Be 12
     }
 
     # New password without similar characters
     It "New password without similar characters"{
         $similar = "IlL10Oo"
-        $password = (.\New-RandomPassword.ps1 -Length 100 -ExcludeSimilar)
+        $password = (..\Scripts\New-RandomPassword.ps1 -Length 100 -ExcludeSimilar)
         
         # Check if the password contains a similar char
         $result = $true

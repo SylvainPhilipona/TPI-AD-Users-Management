@@ -7,16 +7,16 @@
     Date:	17.05.2023
  	*****************************************************************************
     Modifications
- 	Date  : 26.05.2023
+ 	Date  : 31.05.2023
  	Author: Sylvain Philipona
- 	Reason: Better error handeling + new constants
+ 	Reason: Adding Email handling
  	*****************************************************************************
 .SYNOPSIS
     Create AD users based on data provided in a CSV
  	
 .DESCRIPTION
     Imports a CSV file containing user data.
-    Checks required headers, generate unique usernames and creat the users in the Active Directory.
+    Checks required headers, generate unique usernames and create the users in the Active Directory.
     It configure users properties such as password and login script, create home directories and add users to specified groups.
     All actions are performed are recorded in another CSV file.
   	
@@ -97,7 +97,7 @@ param(
 $GROUPS_PREFIX = "GUS_ETML_"
 $GROUPS_SPLIT_CHAR = "%"
 $HOME_DRIVE_LETTER = "H:"
-$HOME_DRIVE_PATH = "C:\USERHOMES"
+$HOME_DRIVE_PATH = "C:\USERHOMESSSSSS"
 $HOME_DRIVE_SHARE = "USERHOMES$"
 $PASSWORD_LENGTH = 12
 $PASSWORD_SPECIALS_CHARS = "!#$&*-/=?@_"
@@ -107,10 +107,11 @@ $DEFAULT_ACTIONS_FILE = "Actions.csv"
 
 $tagPrenom = "Prenom"
 $tagNom = "Nom"
+$tagEmail = "E-mail"
 $tagClasse = "Classe"
 $tagProfession = "Profession"
 $tagGroups = "OptionsAD"
-$requiredHeaders = @($tagPrenom, $tagNom, $tagClasse, $tagProfession, $tagGroups)
+$requiredHeaders = @($tagPrenom, $tagNom, $tagEmail, $tagClasse, $tagProfession, $tagGroups)
 
 ##### Script logic #####
 
@@ -122,7 +123,7 @@ if(!(Get-Module -ListAvailable -name ActiveDirectory)){
 
 # Check if the file exists and is in the .csv format
 if(!(Test-Path -Path $UsersCSV -PathType Leaf) -or [IO.Path]::GetExtension($UsersCSV).ToLower() -ne ".csv"){
-    Write-Host "The file does not exist or is not in CSV format." -ForegroundColor Red
+    Write-Host "The file '$UsersCSV' does not exist or is not in CSV format." -ForegroundColor Red
     exit
 }
 
@@ -157,6 +158,7 @@ foreach($user in $users){
         User = "$($user.$tagPrenom) $($user.$tagNom)"
         Action = $null
         Login = $null
+        Email = $null
         Password = $null
         LoginScript = $null
         HomeDirectory = $null
@@ -227,6 +229,8 @@ foreach($user in $users){
         GivenName               = $user.$tagPrenom
         Surname                 = $user.$tagNom
         samAccountName          = $samAccountName
+        userPrincipalName       = $user.$tagEmail
+        EmailAddress            = $user.$tagEmail
         AccountPassword         = ConvertTo-SecureString $password -AsPlainText -Force
         Description             = $description
         Path                    = $OUPath
@@ -256,9 +260,9 @@ foreach($user in $users){
     Set-ADUser -Identity $samAccountName -homeDirectory $homeDir -homeDrive $HOME_DRIVE_LETTER
 
     # Add the user to the groups
-    # Split the group field from the csv and add the groups suffix at the start of it
+    # Split the group field from the csv and add the groups prefix at the start of it
     # Return a hashtable of actions performed
-    $groups = $user.OptionsAD.Split($GROUPS_SPLIT_CHAR) | ForEach-Object {
+    $groups = $user.$tagGroups.Split($GROUPS_SPLIT_CHAR) | ForEach-Object {
         $_.Replace($_, "$($GROUPS_PREFIX)$($_)")
     }
     $groupsActions = $samAccountName | .\Add-UserGroups.ps1 -Groups $groups | ForEach-Object{
@@ -268,6 +272,7 @@ foreach($user in $users){
     # Log the actions performed on the user
     $userActions["Action"] = "Success"
     $userActions["Login"] = $samAccountName
+    $userActions["Email"] = $user.$tagEmail
     $userActions["Password"] = $password
     $userActions["LoginScript"] = $logonScript
     $userActions["HomeDirectory"] = $homeDir
@@ -277,7 +282,7 @@ foreach($user in $users){
 }
 
 # Format the logged actions for better lisibility
-$allActions = $allActions | Select-Object User, Action, Login, Password, LoginScript, HomeDirectory, Comments, Groups
+$allActions = $allActions | Select-Object User, Action, Login, Email, Password, LoginScript, HomeDirectory, Comments, Groups
 
 # Check if the path is valid and the file extension is .csv
 if(!(Test-Path $ActionsCSV -IsValid) -or [IO.Path]::GetExtension($ActionsCSV).ToLower() -ne ".csv"){

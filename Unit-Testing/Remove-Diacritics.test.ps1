@@ -6,9 +6,9 @@
     Date:	11.05.2023
  	*****************************************************************************
     Modifications
- 	Date  : 
- 	Author: 
- 	Reason: 
+ 	Date  : 31.05.2023
+ 	Author: Sylvain Philipona
+ 	Reason: Script moved to another directory
  	*****************************************************************************
 .SYNOPSIS
     Unit tests for the Remove-Diacritics.test.ps1 script
@@ -21,7 +21,7 @@
 	The result of units tests
 
 .EXAMPLE
-    .\Remove-Diacritics.test.ps1
+    .\Scripts\Remove-Diacritics.test.ps1
 
     Starting discovery in 1 files.
     Discovery found 3 tests in 17ms.
@@ -40,16 +40,16 @@ Describe "Tests"{
 
     # L'été de Raphaël => LetedeRaphael
     It "L'été de Raphaël => LetedeRaphael"{
-        (.\Remove-Diacritics.ps1 -Text "L'été de Raphaël") | Should -Be "LetedeRaphael"
+        (..\Scripts\Remove-Diacritics.ps1 -Text "L'été de Raphaël") | Should -Be "LetedeRaphael"
     }
 
     # ÚéõãÎÇĠ => UeoaICG
     It "ÚéõãÎÇĠ => UeoaICG"{
-        (.\Remove-Diacritics.ps1 -Text "ÚéõãÎÇĠ") | Should -Be "UeoaICG"
+        (..\Scripts\Remove-Diacritics.ps1 -Text "ÚéõãÎÇĠ") | Should -Be "UeoaICG"
     }
 
     # Alessandro D'angélo => AlessandroDangelo
     It "Alessandro D'angélo => AlessandroDangelo"{
-        (.\Remove-Diacritics.ps1 -Text "Alessandro D'angélo") | Should -Be "AlessandroDangelo"
+        (..\Scripts\Remove-Diacritics.ps1 -Text "Alessandro D'angélo") | Should -Be "AlessandroDangelo"
     }
 }

@@ -6,9 +6,9 @@
     Date:	12.05.2023
  	*****************************************************************************
     Modifications
- 	Date  : 
- 	Author: 
- 	Reason: 
+ 	Date  : 31.05.2023
+ 	Author: Sylvain Philipona
+ 	Reason: Script moved to another directory
  	*****************************************************************************
 .SYNOPSIS
     Unit tests for the New-UserLoginScript.test.ps1 script
@@ -21,7 +21,7 @@
 	The result of units tests
 
 .EXAMPLE
-    .\New-UserLoginScript.test.ps1
+    .\Scripts\New-UserLoginScript.test.ps1
 
     
 
@@ -35,21 +35,21 @@ Describe "Tests"{
 
     # Ebeniste => BOIS.BAT
     It "Ebeniste => BOIS.BAT"{
-        (.\New-UserLoginScript.ps1 -Profession "Ebeniste") | Should -Be "BOIS.BAT"
+        (..\Scripts\New-UserLoginScript.ps1 -Profession "Ebeniste") | Should -Be "BOIS.BAT"
     }
 
     # Informaticien => INF.BAT
     It "Informaticien => INF.BAT"{
-        (.\New-UserLoginScript.ps1 -Profession "Informaticien") | Should -Be "INF.BAT"
+        (..\Scripts\New-UserLoginScript.ps1 -Profession "Informaticien") | Should -Be "INF.BAT"
     }
 
     # menuisier => BOIS.BAT
     It "menuisier => BOIS.BAT"{
-        (.\New-UserLoginScript.ps1 -Profession "menuisier") | Should -Be "BOIS.BAT"
+        (..\Scripts\New-UserLoginScript.ps1 -Profession "menuisier") | Should -Be "BOIS.BAT"
     }
 
     # Bucheron => null
     It "Bucheron => null"{
-        (.\New-UserLoginScript.ps1 -Profession "Bucheron") | Should -Be $null
+        (..\Scripts\New-UserLoginScript.ps1 -Profession "Bucheron") | Should -Be $null
     }
 }

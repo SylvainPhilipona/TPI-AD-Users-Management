@@ -1,8 +1,8 @@
-﻿Login;Classe;Profession;OptionsAD
-sylphilipon;CIN2B;BOIS;
-sylphilipon1;FIN1;;
- ;FIN2;;
-jocbolli;CIN1A;;
-nolpraz;CID2B;;
-aledangelo;;;
-test;test;;
+﻿Login;E-mail;Classe;Profession;OptionsAD
+sylphilipon;sylphilipona@eduvaud.ch;CIN2B;Informaticien CFC;APPL_SELECTLINE_RO%ELEVES%ELO_Eleves%CDROMS_RO%APPL_SELECTLINE_DATA_RW
+sylphilipon1;ni@gmail.com;FIN1;Informaticien CFC;APPL_SELECTLINE_RO%ELEVES%ELO_Eleves%CDROMS_RO%APPL_SELECTLINE_DATA_RW
+ ;;FIN2;Informaticien CFC;APPL_SELECTLINE_RO%ELEVES%ELO_Eleves%CDROMS_RO%APPL_SELECTLINE_DATA_RW
+jocbolli;jocbolli@gmail.com;CIN1A;Informaticien CFC;APPL_SELECTLINE_RO%ELEVES%ELO_Eleves%CDROMS_RO%APPL_SELECTLINE_DATA_RW
+nolpraz;dodo@coca.ch;CID2B;Informaticien CFC;APPL_SELECTLINE_RO%ELEVES%ELO_Eleves%CDROMS_RO%APPL_SELECTLINE_DATA_RW
+aledangelo;contact@aless.ch;CID2B;Informaticien CFC;APPL_SELECTLINE_RO%ELEVES%ELO_Eleves%CDROMS_RO%APPL_SELECTLINE_DATA_RW
+test;test@example.com;test;Informaticien CFC;APPL_SELECTLINE_RO%ELEVES%ELO_Eleves%CDROMS_RO%APPL_SELECTLINE_DATA_RW

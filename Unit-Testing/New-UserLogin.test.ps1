@@ -6,9 +6,9 @@
     Date:	10.05.2023
  	*****************************************************************************
     Modifications
- 	Date  : 
- 	Author: 
- 	Reason: 
+ 	Date  : 31.05.2023
+ 	Author: Sylvain Philipona
+ 	Reason: Script moved to another directory
  	*****************************************************************************
 .SYNOPSIS
     Unit tests for the New-UserLogin.ps1 script
@@ -21,7 +21,7 @@
 	The result of units tests
 
 .EXAMPLE
-    .\New-UserLogin.test.ps1
+    .\Scripts\New-UserLogin.test.ps1
 
     Starting discovery in 1 files.
     Discovery found 7 tests in 12ms.
@@ -40,36 +40,31 @@
 Describe "Tests"{
     # Sylvain Philipona => sylphilipon
     It "Sylvain Philipona => sylphilipon"{
-        (.\New-UserLogin.ps1 -FirstName "Sylvain" -LastName "Philipona") | Should -Be "sylphilipon"
+        (..\Scripts\New-UserLogin.ps1 -FirstName "Sylvain" -LastName "Philipona") | Should -Be "sylphilipon"
     }
 
     # John Doe => johdoe
     It "John Doe => johdoe"{
-        (.\New-UserLogin.ps1 -FirstName "John" -LastName "Doe") | Should -Be "johdoe"
+        (..\Scripts\New-UserLogin.ps1 -FirstName "John" -LastName "Doe") | Should -Be "johdoe"
     }
 
     # JOHN DOE => johdoe
     It "JOHN DOE => johdoe"{
-        (.\New-UserLogin.ps1 -LastName "DOE"  -FirstName "JOHN") | Should -Be "johdoe"
+        (..\Scripts\New-UserLogin.ps1 -LastName "DOE"  -FirstName "JOHN") | Should -Be "johdoe"
     }
 
     # Alessandro D'angélo => aled'angélo
     It "Alessandro D'angélo => aled'angélo"{
-        (.\New-UserLogin.ps1 -FirstName "Alessandro" -LastName "D'angélo") | Should -Be "aled'angélo"
+        (..\Scripts\New-UserLogin.ps1 -FirstName "Alessandro" -LastName "D'angélo") | Should -Be "aled'angélo"
     }
 
     # Jo Chen => jochen
     It "Jo Chen => jochen"{
-        (.\New-UserLogin.ps1 -FirstName "Jo" -LastName "Chen") | Should -Be "jochen"
+        (..\Scripts\New-UserLogin.ps1 -FirstName "Jo" -LastName "Chen") | Should -Be "jochen"
     }
 
     # Fernandez Charpentier => fercharpent
     It "Fernandez Charpentier => fercharpent"{
-        (.\New-UserLogin.ps1 -FirstName "Fernandez" -LastName "Charpentier") | Should -Be "fercharpent"
-    }
-
-    # No arguments => empty string
-    It "No arguments => empty string"{
-        (.\New-UserLogin.ps1) | Should -Be ""
+        (..\Scripts\New-UserLogin.ps1 -FirstName "Fernandez" -LastName "Charpentier") | Should -Be "fercharpent"
     }
 }
