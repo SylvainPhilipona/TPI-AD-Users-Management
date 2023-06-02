@@ -149,7 +149,7 @@ foreach($user in $users){
     $adUser = Get-ADUser -Filter {samAccountName -eq $samAccountName} -Properties MemberOf
     if(!($adUser)){
 
-        # The user already exists
+        # The user dosen't exists
         $userActions["Action"] = "Failed"
         $userActions["Comments"] = "The user '$samAccountName' doesn't exists."
         $allActions += [PSCustomObject]$userActions
