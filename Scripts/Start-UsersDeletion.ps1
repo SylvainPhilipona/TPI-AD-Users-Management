@@ -134,7 +134,7 @@ foreach($user in $users){
         Comments = $null
     }
 
-    # Check if the user login field isn'e null or empty
+    # Check if the user login field isn't null or empty
     if(!$userLogin){
         $userActions["Action"] = "Failed"
         $userActions["Comments"] = "The '$tagLogin' field is empty."
@@ -146,7 +146,7 @@ foreach($user in $users){
     $adUser = Get-ADUser -Filter {samAccountName -eq $userLogin}
     if(!($adUser)){
 
-        # The user already exists
+        # The user dosen't exists
         $userActions["Action"] = "Failed"
         $userActions["Comments"] = "The user '$userLogin' doesn't exists."
         $allActions += [PSCustomObject]$userActions
