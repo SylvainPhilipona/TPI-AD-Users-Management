@@ -6,9 +6,9 @@
     Date:	10.05.2023
  	*****************************************************************************
     Modifications
- 	Date  : 31.05.2023
+ 	Date  : 07.06.2023
  	Author: Sylvain Philipona
- 	Reason: Script moved to another directory
+ 	Reason: Pester module auto-installation
  	*****************************************************************************
 .SYNOPSIS
     Unit tests for the New-UserLogin.ps1 script
@@ -35,6 +35,11 @@
     https://pester.dev/docs/v4/usage/assertions
 #>
 
+# Install the Pester module
+if(!(Get-Module -ListAvailable -name Pester)){
+    Write-Host "Pester module installation" -ForegroundColor Green
+    Install-Module Pester -Scope CurrentUser -RequiredVersion 5.3.1 -Confirm:$false #https://github.com/dfinke/ImportExcel
+}
 
 # Test multiple differents cases
 Describe "Tests"{
